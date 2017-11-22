@@ -4,7 +4,7 @@ import com.zopa.exception.InvalidParameterNumberException;
 import com.zopa.exception.InvalidRequestAmountException;
 import com.zopa.model.Offer;
 import com.zopa.service.OfferService;
-import com.zopa.service.SourceFileReader;
+import com.zopa.service.InputFileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -31,7 +31,7 @@ public class Application implements CommandLineRunner {
     public OfferService offerService;
 
     @Autowired
-    public SourceFileReader sourceFileReader;
+    public InputFileReader sourceFileReader;
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).bannerMode(Banner.Mode.OFF).run(args);

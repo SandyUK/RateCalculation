@@ -1,7 +1,6 @@
 package com.zopa.service.impl;
 
 import com.zopa.model.Offer;
-import com.zopa.service.SourceFileReader;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.slf4j.Logger;
@@ -10,18 +9,14 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CsvReaderImpl implements SourceFileReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
+public class InputFileReader implements InputFileReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InputFileReader.class);
 
     /**
      * Read a list of Offers from the CSV file in the given path.

@@ -5,7 +5,7 @@ import com.zopa.model.Offer;
 import java.util.List;
 
 /**
- * The contract which provides offer services including register offers and get lowest rate offer.
+ * The contract which provides offer services including register offers and get best offer.
  */
 public interface OfferService {
 
