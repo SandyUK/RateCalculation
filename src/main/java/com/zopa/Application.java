@@ -3,8 +3,10 @@ package com.zopa;
 import com.zopa.exception.InvalidParameterNumberException;
 import com.zopa.exception.InvalidRequestAmountException;
 import com.zopa.model.Offer;
+import com.zopa.model.Quote;
 import com.zopa.service.OfferService;
 import com.zopa.service.InputFileReader;
+import com.zopa.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +35,10 @@ public class Application implements CommandLineRunner {
     @Autowired
     public InputFileReader sourceFileReader;
 
+    @Autowired
+    public LoanService loanService;
+
+
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).bannerMode(Banner.Mode.OFF).run(args);
     }
@@ -42,9 +48,10 @@ public class Application implements CommandLineRunner {
         validateParameterNumber(args);
         String path = args[0];
         int requestAmount = parseRequestAmount(args[1]);
-        List<Offer> offers = sourceFileReader.readOffers(path);
-        offerService.registerOffers(offers);
-        Offer bestOffer = offerService.getBestOffer(requestAmount);
+        List<Offer> offers = this.sourceFileReader.readOffersFromFile(path);
+        this.offerService.registerOffers(offers);
+        Offer bestOffer = this.offerService.getBestOffer(requestAmount);
+        Quote quote = this.loanService.generateQuote(bestOffer, requestAmount);
 
     }
 

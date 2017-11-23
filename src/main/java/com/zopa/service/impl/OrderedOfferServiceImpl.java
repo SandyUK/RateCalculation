@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The implementation of the OfferService, this implementation sorts the offers when registering them.
+ */
 @Service
 public class OrderedOfferServiceImpl implements OfferService {
 
@@ -32,6 +34,7 @@ public class OrderedOfferServiceImpl implements OfferService {
     public void registerOffers(List<Offer> offers) {
         this.registeredOffers = offers;
         sortRegisteredOffers();
+        validateRegistedOffers();
     }
 
     /**
@@ -55,7 +58,6 @@ public class OrderedOfferServiceImpl implements OfferService {
      */
     @Override
     public List<Offer> getRegisteredOffers() {
-        validateRegistedOffers();
         return this.registeredOffers;
     }
 
@@ -65,7 +67,6 @@ public class OrderedOfferServiceImpl implements OfferService {
      * @throws InvalidOfferListException if the registered offers are null or empty.
      */
     private void sortRegisteredOffers() {
-        validateRegistedOffers();
         this.registeredOffers.sort((a, b) -> a.compareTo(b));
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
 public interface InputFileReader {
 
     /***
-     * Read a list of Offers from the file in the given path.
-     * @param path
-     * @return
+     * Read a list of Offers from the input file in the given path.
+     * @param path the path to the input file
+     * @return the list offers read from the file
      */
-   List<Offer> readOffers(String path);
+   List<Offer> readOffersFromFile(String path);
 }
