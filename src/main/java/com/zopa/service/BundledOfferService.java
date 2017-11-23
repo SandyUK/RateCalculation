@@ -5,21 +5,23 @@ import com.zopa.model.Offer;
 import java.util.List;
 
 /**
- * The contract which provides offer services including register offers and get best offer.
+ * The contract which provides offer service to register offers and get a bundle of offers for the loan request amount.
  */
-public interface OfferService {
+public interface BundledOfferService {
 
     /**
      * Register a list of Offers to the system.
+     *
      * @param offerList the list of offer to be registered to the system
      */
     void registerOffers(List<Offer> offerList);
 
     /**
-     * Get the best offer in the system.
-     * @param requestedAmount the requested amount
+     * Get a bundle of offers from the system, the sum of those offers' available amounts covers the request amount.
+     *
+     * @param requestAmount the requested amount
      */
-    Offer getBestOffer(int requestedAmount);
+    List<Offer> getBundledOffers(int requestAmount);
 
     /**
      * Get all the offers registered in the system.

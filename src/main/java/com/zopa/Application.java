@@ -3,8 +3,9 @@ package com.zopa;
 import com.zopa.exception.InvalidParameterNumberException;
 import com.zopa.exception.InvalidRequestAmountException;
 import com.zopa.model.Offer;
-import com.zopa.service.OfferService;
+import com.zopa.service.BundledOfferService;
 import com.zopa.service.InputFileReader;
+import com.zopa.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -18,8 +19,8 @@ import java.util.List;
  * <p>
  * Assumption:
  * <ul>
- * <li>The system does not bundle multiple lenders' offers together to match
- * requested loan. In other words, the loan is provided by only one offer.</li>
+ * <li>The system can bundle multiple lenders' offers together to match
+ * requested amount.</li>
  * <li>If a lender's offer is more than the requested amount of the loan, the
  * system will give the requested amount rather than the whole offer.</li>
  * <ul>
@@ -28,10 +29,14 @@ import java.util.List;
 public class Application implements CommandLineRunner {
 
     @Autowired
-    public OfferService offerService;
+    public InputFileReader sourceFileReader;
+
 
     @Autowired
-    public InputFileReader sourceFileReader;
+    public BundledOfferService offerService;
+
+    @Autowired
+    public QuoteService quoteService;
 
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).bannerMode(Banner.Mode.OFF).run(args);
@@ -42,9 +47,9 @@ public class Application implements CommandLineRunner {
         validateParameterNumber(args);
         String path = args[0];
         int requestAmount = parseRequestAmount(args[1]);
-        List<Offer> offers = sourceFileReader.readOffers(path);
-        offerService.registerOffers(offers);
-        Offer bestOffer = offerService.getBestOffer(requestAmount);
+        List<Offer> offersFromFile = sourceFileReader.readOffers(path);
+        offerService.registerOffers(offersFromFile);
+        List<Offer> offerBundle = offerService.getBundledOffers(requestAmount);
 
     }
 

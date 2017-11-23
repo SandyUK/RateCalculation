@@ -1,6 +1,7 @@
 package com.zopa.service.impl;
 
 import com.zopa.model.Offer;
+import com.zopa.service.InputFileReader;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.slf4j.Logger;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class InputFileReader implements InputFileReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InputFileReader.class);
+public class CsvInputFileReaderImpl implements InputFileReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvInputFileReaderImpl.class);
 
     /**
      * Read a list of Offers from the CSV file in the given path.

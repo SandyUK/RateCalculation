@@ -1,6 +1,6 @@
 package com.zopa.model;
 
-public class Loan {
+public class Quote {
 	private int requestedAmount;
 	private double rate;
 	private double monthlyPayment;
