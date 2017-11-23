@@ -4,9 +4,9 @@ import com.zopa.exception.InvalidParameterNumberException;
 import com.zopa.exception.InvalidRequestAmountException;
 import com.zopa.model.Offer;
 import com.zopa.model.Quote;
-import com.zopa.service.OfferService;
 import com.zopa.service.InputFileReader;
 import com.zopa.service.LoanService;
+import com.zopa.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -38,7 +38,6 @@ public class Application implements CommandLineRunner {
     @Autowired
     public LoanService loanService;
 
-
     public static void main(String[] args) throws Exception {
         new SpringApplicationBuilder(Application.class).bannerMode(Banner.Mode.OFF).run(args);
     }
@@ -52,10 +51,11 @@ public class Application implements CommandLineRunner {
         this.offerService.registerOffers(offers);
         Offer bestOffer = this.offerService.getBestOffer(requestAmount);
         Quote quote = this.loanService.generateQuote(bestOffer, requestAmount);
+        showQuote(quote);
 
     }
 
-    private void validateParameterNumber(String... args){
+    private void validateParameterNumber(String... args) {
         if (args.length != 2) {
             throw new InvalidParameterNumberException("There must be 2 parameters: [path_to_input_file] and [request_amount]");
         }
@@ -72,6 +72,14 @@ public class Application implements CommandLineRunner {
         } catch (ClassCastException e) {
             throw new InvalidRequestAmountException("The request amount must be an integer.");
         }
+    }
+
+    private void showQuote(Quote quote) {
+        System.out.println("Requested amount: £" + quote.getRequestedAmount());
+        System.out.println("Rate: " + quote.getRate() * 100 + "%");
+        System.out.println("Monthly repayment: £" + quote.getMonthlyPayment());
+        System.out.println("Total repayment: £" + quote.getTotalPayment());
+
     }
 
 }
